@@ -4,6 +4,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
 import logging
 from aiogram import filters as F
+from aiogram import types
 import random
 
 #Логирование
@@ -38,16 +39,23 @@ async def joke(message: types.Message):
 async def stop(message: types.Message):
     await message.answer(f'Пока, {message.from_user.full_name}!')
 
-@dp.message(F.text)
-async def msg_echo(message: types.Message):
-    print(message.text)
-    name=message.chat.first_name
-    if'hello'in message.text.lower():
-        await message.reply(f"И тебе привет, {name}")
-    if'by'in message.text.lower():
-        await message.reply(f"Пока, {name}")
-    else:
-        await message.reply(f"{name}, я Вас не понял.")
+# @dp.message(F.text)
+# async def msg_echo(message: types.Message):
+#     print(message.text)
+#     name=message.chat.first_name
+#     if'hello'in message.text.lower():
+#         await message.reply(f"И тебе привет, {name}")
+#     if'by'in message.text.lower():
+#         await message.reply(f"Пока, {name}")
+#     else:
+#         await message.reply(f"{name}, я Вас не понял.")
+
+button1 = types.KeyboardButton(text='Информация1')
+button2 = types.KeyboardButton(text='Информация2')
+kb = [
+    [button1, button2],
+]
+
 async def main():
     await dp.start_polling(bot)
 
