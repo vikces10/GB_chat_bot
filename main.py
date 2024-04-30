@@ -1,11 +1,11 @@
 import asyncio
 import config
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters.command import Command
 import logging
-from aiogram import filters as F
 from aiogram import types
 import random
+from keyboards import keyboard
 
 #Логирование
 logging.basicConfig(level=logging.INFO)
@@ -17,7 +17,7 @@ dp = Dispatcher()
 
 @dp.message(Command(commands=['start']))
 async def start(message: types.Message):
-    await message.answer(f'Привет, {message.from_user.full_name}!')
+    await message.answer(f'Привет, {message.from_user.full_name}!', reply_markup=keyboard)
 
 @dp.message(Command(commands=['user']))
 async def user(message: types.Message):
@@ -39,22 +39,29 @@ async def joke(message: types.Message):
 async def stop(message: types.Message):
     await message.answer(f'Пока, {message.from_user.full_name}!')
 
-# @dp.message(F.text)
-# async def msg_echo(message: types.Message):
-#     print(message.text)
-#     name=message.chat.first_name
-#     if'hello'in message.text.lower():
-#         await message.reply(f"И тебе привет, {name}")
-#     if'by'in message.text.lower():
-#         await message.reply(f"Пока, {name}")
-#     else:
-#         await message.reply(f"{name}, я Вас не понял.")
 
-button1 = types.KeyboardButton(text='Информация1')
-button2 = types.KeyboardButton(text='Информация2')
-kb = [
-    [button1, button2],
-]
+@dp.message(F.text.lower() == "число")
+async def number (message: types.Message):
+    number = random.randint(a=0,b=100)
+    await message.answer(f'Твое число {number}!')
+
+@dp.message(F.text)
+async def msg (message: types.Message):
+    if "привет" in message.text.lower():
+        await message.reply('И тебе привет!')
+    elif "как дела" in message.text.lower():
+        await message.reply('Нормально, а у тебя?')
+    elif "хорошо" in message.text.lower():
+        await message.reply('Рад за тебя!')
+    elif "ок" in message.text.lower():
+        await message.reply('Рад это слышать!')
+    elif "отлично" in message.text.lower():
+        await message.reply('Класс!')
+    elif "плохо" in message.text.lower():
+        await message.reply('Не переживай, все наладится!')
+    else:
+        await message.reply('Не понимаю тебя...')
+
 
 async def main():
     await dp.start_polling(bot)
@@ -62,3 +69,4 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
+
