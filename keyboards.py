@@ -2,11 +2,11 @@ from aiogram import types
 
 
 button1 = types.KeyboardButton(text='/start')
-button2 = types.KeyboardButton(text='/stop')
-button3 = types.KeyboardButton(text='/info')
-button4 = types.KeyboardButton(text='/user')
-button5 = types.KeyboardButton(text='/id')
-button6 = types.KeyboardButton(text='/joke')
+button2 = types.KeyboardButton(text='/игра')
+button3 = types.KeyboardButton(text='/число')
+button4 = types.KeyboardButton(text='/Лиса')
+button5 = types.KeyboardButton(text='/ip')
+button6 = types.KeyboardButton(text='/BTC')
 
 
 keyboard1 = [
